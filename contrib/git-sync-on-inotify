@@ -19,7 +19,7 @@ fi
 
 cd "$GIT_SYNC_DIRECTORY"
 
-remote_name=$(git config --get branch.$(basename $(git symbolic-ref -q HEAD)).pushRemote)
+remote_name=$(git config --get branch.$(basename $(git symbolic-ref -q HEAD)).remote)
 
 echo "Syncing $(git remote get-url $remote_name) at $(pwd) with a default sync interval of $GIT_SYNC_INTERVAL"
 
