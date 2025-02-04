@@ -50,7 +50,6 @@ while true; do
     time_since_last_sync=$((current_time - last_sync))
 
     if [ $time_since_last_sync -le $GIT_SLEEP_TIME ]; then
-	then
        sleep 10
        continue
     else
