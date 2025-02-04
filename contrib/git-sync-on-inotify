@@ -48,9 +48,19 @@ while true; do
     )
     current_time=$(date +%s)
     time_since_last_sync=$((current_time - last_sync))
-    if [ ! -z "$changedFile" ] && [ $time_since_last_sync -ge $GIT_SLEEP_TIME ]; then
-        echo "Syncing for: $changedFile"
-        { git check-ignore "$changedFile" >/dev/null; } || $GIT_SYNC_COMMAND -n -s
+
+    if [ $time_since_last_sync -le $GIT_SLEEP_TIME ]; then
+	then
+       sleep 10
+       continue
+    else
+        if [ ! -z "$changedFile" ]; then
+            echo "Syncing for: $changedFile"
+            { git check-ignore "$changedFile" > /dev/null; } || $GIT_SYNC_COMMAND -n -s
+        else
+            echo "Syncing due to timeout"
+		    $GIT_SYNC_COMMAND -n -s
+        fi
         last_sync=$(date +%s)
     fi
 done
